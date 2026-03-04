@@ -1,226 +1,582 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>S.L.Partylines Birthday & Event Decor</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.L. Partylines | Premier Event & Birthday Decor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #db2777;
+            --accent: #7c3aed;
+        }
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<style>
-.section-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    color: #333;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-.activities-text {
-    max-width: 1100px;
-    margin: auto;
-}
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
 
-.activity-card {
-    background: white;
-    border-radius: 12px;
-    padding: 30px 20px;
-    text-align: center;
-    text-decoration: none;
-    color: #333;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-.activity-card .icon {
-    font-size: 42px;
-    display: block;
-    margin-bottom: 10px;
-}
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #fdf2f8, #e0e7ff, #ffffff);
+        }
 
-.activity-card .title {
-    font-size: 18px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 6px;
-}
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.activity-card .subtitle {
-    font-size: 14px;
-    color: #666;
-}
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
 
+        .gallery-img {
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
 
-.activity-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
 
-.hero {
-    text-align: center;
-    padding: 1px 0px;
-    background: #ffe6eb;
-}
+        /* Dropdown custom behavior */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
 
-.hero-tagline {
-    font-size: 18px;
-    font-weight: 500;
-    color: #5b3a82;
-    margin-top: 10px;
-}
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-.hero-sub {
-    margin-top: 18px;
-    font-size: 19px;
-    color: #3b0764;
-    font-weight: 600;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.hero-desc {
-    margin-top: 15px;
-    font-size: 16px;
-    color: #555;
-    max-width: 850px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-}
+        .floating-wa {
+            animation: bounce 2s infinite;
+        }
 
-.hero-trust {
-    margin-top: 20px;
-    font-size: 15px;
-    color: #6d28d9;
-    font-weight: 600;
-}
-</style>
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Modal styling */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-900">
 
-<nav class="navbar logo-nav">
-    <div class="logo">🎉 S.L.Partylines</div>
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 w-full z-50 py-4">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🎉</span>
+                <span class="text-xl font-extrabold tracking-tight text-indigo-900">S.L. <span
+                        class="text-pink-600">Partylines</span></span>
+            </div>
 
-    <div class="menu">
-        <a href="{{ url_for('home') }}">🏠 Home</a>
-        <a href="{{ url_for('services') }}">🎈 Decor</a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="{{ url_for('home') }}#home"
+                    class="font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
+                <a href="#gallery"
+                    class="font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Decor</a>
+                <div class="dropdown relative group">
+                    <button class="flex items-center gap-1 font-semibold text-slate-600 hover:text-indigo-600 py-2">
+                        Activities <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div
+                        class="dropdown-menu hidden absolute top-full left-0 w-56 bg-white shadow-xl rounded-xl border border-slate-100 overflow-hidden">
+                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎪 Activity
+                            Games</a>
+                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎨 Interactive
+                            Fun</a>
+                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🍿 Snack
+                            Stalls</a>
+                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🌸 Flower
+                            Decor</a>
+                    </div>
+                </div>
+                <a href="#services"
+                    class="font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Services</a>
+                <a href="#contact"
+                    class="bg-indigo-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all">Get
+                    Quote</a>
+            </div>
 
-        <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">🎪 Activities ▾</button>
-            <div class="dropdown-content">
-                <a href="{{ url_for('activities') }}">🎪 Activity Games</a>
-                <a href="{{ url_for('interactive') }}">🎨 Interactive</a>
-                <a href="{{ url_for('snacks') }}">🍿 Snacks</a>
-                <a href="{{ url_for('flower_decor') }}">🌸 Flowers</a>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 px-6 py-8 shadow-xl">
+            <div class="flex flex-col gap-6 text-center">
+                <a href="{{ url_for('home') }}#home" onclick="toggleMobileMenu()" class="text-lg font-bold">Home</a>
+                <a href="#gallery" onclick="toggleMobileMenu()" class="text-lg font-bold">Decor</a>
+                <a href="#activities" onclick="toggleMobileMenu()" class="text-lg font-bold">Activities</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="text-lg font-bold">Services</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="bg-indigo-600 text-white py-3 rounded-xl">Contact
+                    Now</a>
             </div>
         </div>
+    </nav>
 
-        <a href="{{ url_for('gallery') }}">🖼 Gallery</a>
-        <a href="{{ url_for('contact') }}">📞 Contact</a>
-    </div>
-</nav>
-
-
-
-<section class="hero">
-    <h1>Making Every Celebration Special 🎉</h1>
-
-    <p class="hero-tagline">
-        Birthday Decorations • Activities • Snacks • Small Flower Decor
-    </p>
-
-    <p class="hero-sub">
-        For over <strong>20 years</strong>, we've been creating joy, laughter, and unforgettable moments
-        for children and families across countless celebrations.
-    </p>
-
-    <p class="hero-desc">
-        From colourful birthday themes and exciting activity games to creative workshops,
-        tasty snack stalls, and elegant flower decorations — we take care of every detail
-        so you can relax and enjoy the celebration.
-    </p>
-
-    <p class="hero-trust">
-        ✨ Trusted by generations • 💜 Loved by kids • 🎈 Perfect for every occasion
-    </p>
-</section>
-
-
-<section class="home-section">
-    <h2>🎈 Our Decoration Services</h2>
-
-    <div class="grid">
-        <div class="card">
-<img src="{{ url_for('static', filename='images/Theme decor.jpeg') }}" alt="Birthday Theme Decoration">
-            <p>Birthday Theme Decoration</p>
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient pt-32 pb-20 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div
+                    class="inline-flex items-center gap-2 bg-white/50 border border-indigo-100 px-4 py-1.5 rounded-full text-indigo-600 font-bold text-sm uppercase tracking-wider">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Over 20 Years of Excellence
+                </div>
+                <h1 class="playfair text-5xl md:text-7xl leading-tight text-slate-900">
+                    Making Your <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">Celebrations</span>
+                    <br>
+                    Unforgettable.
+                </h1>
+                <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
+                    From magical birthday themes and vibrant snacks to interactive activities, we bring your vision to
+                    life with professional care and creativity.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact"
+                        class="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-indigo-200 transition-all text-center">Plan
+                        My Event</a>
+                    <a href="#gallery"
+                        class="px-8 py-4 bg-white border-2 border-slate-100 text-slate-700 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all text-center">View
+                        Our Work</a>
+                </div>
+                <div class="flex items-center gap-6 pt-4">
+                    <div class="flex -space-x-3">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white"
+                            alt="user">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white"
+                            alt="user">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white"
+                            alt="user">
+                    </div>
+                    <p class="text-sm font-medium text-slate-500 italic">"Trusted by over 10,000+ families in Bangalore"
+                    </p>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-pink-100 rounded-full blur-3xl opacity-50 -z-10">
+                </div>
+                <div
+                    class="absolute -bottom-10 -left-10 w-64 h-64 bg-indigo-100 rounded-full blur-3xl opacity-50 -z-10">
+                </div>
+                <img src="{{ url_for('static', filename='images/Grand theme decor 2.jpeg') }}"
+                    onerror="this.src='https://images.unsplash.com/photo-1530103862676-fa8c91bbe34b?auto=format&fit=crop&q=80&w=800';"
+                    alt="Decoration" class="rounded-[2rem] shadow-2xl border-4 border-white transform rotate-2">
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-<img src="{{ url_for('static', filename='images/Surpise decor 2.jpeg') }}" alt="Surprise Room Setup">
+    <!-- Services -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Our Premium Services</h2>
+                <div class="w-24 h-1.5 bg-indigo-600 mx-auto rounded-full"></div>
+            </div>
 
-    <p>Surprise Room Setup</p>
-</div>
-
-
-        <div class="card">
-
-<img src="{{ url_for('static', filename='images/Grand theme decor 2.jpeg') }}" alt="Grand theme Decoration">
-<p>Grand theme Decoration</p>
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="card-hover p-8 rounded-3xl bg-indigo-50 border border-indigo-100">
+                    <div
+                        class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-100">
+                        <i data-lucide="palette" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Theme Decor</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Customised themes ranging from Disney to elegant
+                        minimalist setups.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="card-hover p-8 rounded-3xl bg-pink-50 border border-pink-100">
+                    <div
+                        class="w-14 h-14 bg-pink-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-pink-100">
+                        <i data-lucide="cake" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Birthdays</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">From first birthdays to grand milestones, we
+                        handle everything.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="card-hover p-8 rounded-3xl bg-purple-50 border border-purple-100">
+                    <div
+                        class="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-100">
+                        <i data-lucide="home" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Home Events</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Transforming your living space into a festive
+                        celebration zone.</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="card-hover p-8 rounded-3xl bg-amber-50 border border-amber-100">
+                    <div
+                        class="w-14 h-14 bg-amber-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-100">
+                        <i data-lucide="flower-2" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Floral Setup</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Traditional flower decorations for small
+                        ceremonies and rituals.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-<img src="{{ url_for('static', filename='images/home_decor.jpeg') }}" alt="Home / Hall Decoration">
-            <p>Home / Hall Decoration</p>
+    <!-- Activities & Fun -->
+    <section id="activities" class="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full"></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <p class="text-indigo-400 font-bold uppercase tracking-widest text-sm mb-2">Entertainment Hub</p>
+                    <h2 class="text-4xl md:text-5xl font-extrabold">Games & Activities</h2>
+                </div>
+                <p class="text-slate-400 max-w-md">Keep your guests entertained with our curated selection of fun stalls
+                    and bouncy activities.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
+                        <img src="https://images.unsplash.com/photo-1533749047135-181ed091f817?auto=format&fit=crop&q=80&w=600"
+                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Games">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-8 left-8">
+                            <h4 class="text-2xl font-bold mb-2">Bouncy Castles</h4>
+                            <p class="text-slate-300 text-sm">Sizes for all ages & venues</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
+                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=600"
+                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Art">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-8 left-8">
+                            <h4 class="text-2xl font-bold mb-2">Interactive Art</h4>
+                            <p class="text-slate-300 text-sm">Face painting, tattoo & clay</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
+                        <img src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&q=80&w=600"
+                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Snacks">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-8 left-8">
+                            <h4 class="text-2xl font-bold mb-2">Live Snacks</h4>
+                            <p class="text-slate-300 text-sm">Popcorn, Cotton Candy & Sweet Corn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
-<section class="home-section light-bg">
-    <h2 class="section-title">✨ Checkout Our Activities</h2>
+    </section>
 
-    <div class="grid activities-text">
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4 italic playfair">Our Masterpieces</h2>
+                <p class="text-slate-600">Click on any image to expand the celebration</p>
+            </div>
 
-        <a href="{{ url_for('activities') }}" class="activity-card">
-            <span class="icon">🎪</span>
-            <span class="title">Activity Games</span>
-            <span class="subtitle">Bouncy castles, trampolines & more</span>
-        </a>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                {% if images %}
+                {% for img in images %}
+                <div class="gallery-item overflow-hidden rounded-2xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="{{ url_for('static', filename='images/' + img) }}" loading="lazy"
+                        class="gallery-img w-full" alt="Decoration Setup">
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="gallery-item overflow-hidden rounded-2xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=600"
+                        class="gallery-img w-full" alt="Grand Theme Decor 1">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-2xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=600"
+                        class="gallery-img w-full" alt="Balloons Decoration">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-2xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&q=80&w=600"
+                        class="gallery-img w-full" alt="Cake Table Setup">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-2xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&q=80&w=600"
+                        class="gallery-img w-full" alt="Pink Fairy Theme">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
-        <a href="{{ url_for('interactive') }}" class="activity-card">
-            <span class="icon">🎨</span>
-            <span class="title">Interactive Activities</span>
-            <span class="subtitle">Art, games & creative fun</span>
-        </a>
+    <!-- Contact & Booking -->
+    <section id="contact" class="py-24">
+        <div class="max-w-5xl mx-auto px-4">
+            <div
+                class="bg-indigo-600 rounded-[3rem] p-8 md:p-16 text-white shadow-3xl shadow-indigo-200 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-extrabold mb-6 leading-tight">Ready to start planning your dream event?
+                    </h2>
+                    <p class="text-indigo-100 mb-10 leading-relaxed text-lg">Send us a message and we'll get back to you
+                        with a customized quote within 24 hours.</p>
 
-        <a href="{{ url_for('snacks') }}" class="activity-card">
-            <span class="icon">🍿</span>
-            <span class="title">Snack Stalls</span>
-            <span class="subtitle">Fresh & kids-friendly snacks</span>
-        </a>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-indigo-200">Call Us</p>
+                                <p class="font-bold text-lg">+91 98458 55646</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-indigo-200">Location</p>
+                                <p class="font-bold text-lg">Bangalore, Karnataka</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <a href="{{ url_for('flower_decor') }}" class="activity-card">
-            <span class="icon">🌸</span>
-            <span class="title">Flower Decoration</span>
-            <span class="subtitle">Small events & traditional décor</span>
-        </a>
+                <div
+                    class="bg-white rounded-3xl p-8 md:p-12 text-slate-800 shadow-2xl flex flex-col justify-center items-center text-center">
+                    <div
+                        class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-100">
+                        <i data-lucide="message-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Chat With Us</h3>
+                    <p class="text-slate-600 mb-8 max-w-sm">Skip the form! Chat directly with our team on WhatsApp for
+                        instant quotes and event planning.</p>
+                    <a href="https://wa.me/919845855646" target="_blank"
+                        class="w-full flex items-center justify-center gap-3 bg-[#25D366] text-white py-4 px-8 rounded-xl font-bold text-lg hover:bg-green-600 hover:shadow-lg transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" stroke="none">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Enquire on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </div>
-</section>
+    <!-- Footer -->
+    <footer class="py-12 bg-slate-50 border-t border-slate-200 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎉</span>
+                    <span class="text-xl font-extrabold text-indigo-900">S.L. <span
+                            class="text-pink-600">Partylines</span></span>
+                </div>
+                <div class="flex gap-8">
+                    <a href="https://www.instagram.com/sl.partylines?igsh=MTd6cXd6eGk3aHc5bw==" target="_blank"
+                        class="text-slate-400 hover:text-indigo-600"><i data-lucide="instagram"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-indigo-600"><i data-lucide="facebook"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-indigo-600"><i data-lucide="twitter"></i></a>
+                </div>
+                <p class="text-slate-500 font-medium">© 2024 S.L. Partylines Event Decorators | Designed for Joy</p>
+                <p class="text-slate-400 text-sm">Serving across Bangalore for 20+ years</p>
+            </div>
+        </div>
+    </footer>
 
-
-
-<section class="cta">
-    <h2>📞 Ready to Plan Your Event?</h2>
-    <a class="btn" href="https://wa.me/919999999999">
-        Enquire on WhatsApp
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/919845855646"
+        class="floating-wa fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl z-[100] hover:scale-110 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"
+            stroke="none">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
     </a>
-</section>
 
-<footer>
-    <p>© S.L.partylines.com Birthday & Event Decor | Bangalore</p>
-</footer>
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lightboxImg" class="max-w-[90%] max-h-[80%] rounded-xl shadow-2xl" src="" alt="Zoomed view">
+        <p id="lightboxCaption"
+            class="absolute bottom-10 text-white font-bold text-xl bg-black/40 px-6 py-2 rounded-full"></p>
+    </div>
 
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        }
+
+        // Lightbox Logic
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+
+            lightboxImg.src = img.src;
+            if (img.onerror) {
+                // If it is an error fallback, the src might be unsplash.
+                // We display it anyway.
+            }
+            lightboxCaption.innerText = img.alt;
+            lightbox.style.display = 'flex';
+        }
+
+        // Smooth Scrolling logic for all anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                // To support a setup where the href is /home#home
+                const targetId = this.getAttribute('href').split('#')[1];
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+
+        // Handle pathnames with hash jumps seamlessly
+        const urlHash = window.location.hash;
+        if (urlHash) {
+            const target = document.querySelector(urlHash);
+            if (target) {
+                setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
+            }
+        }
+
+        // Enquiry Form Submission Logic
+        document.getElementById('enquiryForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('eqName').value;
+            const phone = document.getElementById('eqPhone').value;
+            const type = document.getElementById('eqType').value;
+            const date = document.getElementById('eqDate').value;
+            const location = document.getElementById('eqLocation').value;
+            const budget = document.getElementById('eqBudget').value;
+            const message = document.getElementById('eqMessage').value;
+
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            fetch('/api/enquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, type, date, location, budget, message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Pre-fill WhatsApp message 
+                        const waText = encodeURIComponent(`Hello S.L. Partylines! I just submitted an enquiry on your website.\n\n*Name:* ${name}\n*Event:* ${type}\n*Date:* ${date}\n\nCould we discuss further?`);
+                        document.getElementById('waButton').href = `https://wa.me/919845855646?text=${waText}`;
+
+                        // Toggle visibility of the form and success content
+                        document.getElementById('enquiryFormContent').classList.add('hidden');
+
+                        const successContent = document.getElementById('successContent');
+                        successContent.classList.remove('hidden');
+                        successContent.classList.add('flex');
+
+                        lucide.createIcons(); // refresh icons within hidden container
+                    } else {
+                        alert('Error sending enquiry. Please try logging the details or reaching out via WhatsApp.');
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Network error. Please try again or WhatsApp us directly.');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+        });
+    </script>
 </body>
-<script>
-function toggleDropdown() {
-    document.querySelector(".dropdown-content")
-        .classList.toggle("show");
-}
-</script>
 
 </html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>S.L.Partylines Birthday & Event Decor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.activities-text {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.activity-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.activity-card .icon {
+    font-size: 42px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.activity-card .title {
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.activity-card .subtitle {
+    font-size: 14px;
+    color: #666;
+}
+
+
+.activity-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.hero {
+    text-align: center;
+    padding: 1px 0px;
+    background: #ffe6eb;
+}
+
+.hero-tagline {
+    font-size: 18px;
+    font-weight: 500;
+    color: #5b3a82;
+    margin-top: 10px;
+}
+
+.hero-sub {
+    margin-top: 18px;
+    font-size: 19px;
+    color: #3b0764;
+    font-weight: 600;
+}
+
+.hero-desc {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #555;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.hero-trust {
+    margin-top: 20px;
+    font-size: 15px;
+    color: #6d28d9;
+    font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar logo-nav">
+    <div class="logo">🎉 S.L.Partylines</div>
+
+    <div class="menu">
+        <a href="{{ url_for('home') }}">🏠 Home</a>
+        <a href="{{ url_for('services') }}">🎈 Decor</a>
+
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">🎪 Activities ▾</button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('activities') }}">🎪 Activity Games</a>
+                <a href="{{ url_for('interactive') }}">🎨 Interactive</a>
+                <a href="{{ url_for('snacks') }}">🍿 Snacks</a>
+                <a href="{{ url_for('flower_decor') }}">🌸 Flowers</a>
+            </div>
+        </div>
+
+        <a href="{{ url_for('gallery') }}">🖼 Gallery</a>
+        <a href="{{ url_for('contact') }}">📞 Contact</a>
+    </div>
+</nav>
+
+
+
+<section class="hero">
+    <h1>Making Every Celebration Special 🎉</h1>
+
+    <p class="hero-tagline">
+        Birthday Decorations • Activities • Snacks • Small Flower Decor
+    </p>
+
+    <p class="hero-sub">
+        For over <strong>20 years</strong>, we've been creating joy, laughter, and unforgettable moments
+        for children and families across countless celebrations.
+    </p>
+
+    <p class="hero-desc">
+        From colourful birthday themes and exciting activity games to creative workshops,
+        tasty snack stalls, and elegant flower decorations — we take care of every detail
+        so you can relax and enjoy the celebration.
+    </p>
+
+    <p class="hero-trust">
+        ✨ Trusted by generations • 💜 Loved by kids • 🎈 Perfect for every occasion
+    </p>
+</section>
+
+
+<section class="home-section">
+    <h2>🎈 Our Decoration Services</h2>
+
+    <div class="grid">
+        <div class="card">
+<img src="{{ url_for('static', filename='images/Theme decor.jpeg') }}" alt="Birthday Theme Decoration">
+            <p>Birthday Theme Decoration</p>
+        </div>
+
+        <div class="card">
+<img src="{{ url_for('static', filename='images/Surpise decor 2.jpeg') }}" alt="Surprise Room Setup">
+
+    <p>Surprise Room Setup</p>
+</div>
+
+
+        <div class="card">
+
+<img src="{{ url_for('static', filename='images/Grand theme decor 2.jpeg') }}" alt="Grand theme Decoration">
+<p>Grand theme Decoration</p>
+        </div>
+
+        <div class="card">
+<img src="{{ url_for('static', filename='images/home_decor.jpeg') }}" alt="Home / Hall Decoration">
+            <p>Home / Hall Decoration</p>
+        </div>
+    </div>
+</section>
+<section class="home-section light-bg">
+    <h2 class="section-title">✨ Checkout Our Activities</h2>
+
+    <div class="grid activities-text">
+
+        <a href="{{ url_for('activities') }}" class="activity-card">
+            <span class="icon">🎪</span>
+            <span class="title">Activity Games</span>
+            <span class="subtitle">Bouncy castles, trampolines & more</span>
+        </a>
+
+        <a href="{{ url_for('interactive') }}" class="activity-card">
+            <span class="icon">🎨</span>
+            <span class="title">Interactive Activities</span>
+            <span class="subtitle">Art, games & creative fun</span>
+        </a>
+
+        <a href="{{ url_for('snacks') }}" class="activity-card">
+            <span class="icon">🍿</span>
+            <span class="title">Snack Stalls</span>
+            <span class="subtitle">Fresh & kids-friendly snacks</span>
+        </a>
+
+        <a href="{{ url_for('flower_decor') }}" class="activity-card">
+            <span class="icon">🌸</span>
+            <span class="title">Flower Decoration</span>
+            <span class="subtitle">Small events & traditional décor</span>
+        </a>
+
+    </div>
+</section>
+
+
+
+<section class="cta">
+    <h2>📞 Ready to Plan Your Event?</h2>
+    <a class="btn" href="https://wa.me/919999999999">
+        Enquire on WhatsApp
+    </a>
+</section>
+
+<footer>
+    <p>© S.L.partylines.com Birthday & Event Decor | Bangalore</p>
+</footer>
+
+</body>
+<script>
+function toggleDropdown() {
+    document.querySelector(".dropdown-content")
+        .classList.toggle("show");
+}
+</script>
+
+</html>

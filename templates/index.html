@@ -26,6 +26,14 @@
             font-family: 'Playfair Display', serif;
         }
 
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         .glass-nav {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -128,13 +136,13 @@
                     </button>
                     <div
                         class="dropdown-menu hidden absolute top-full left-0 w-56 bg-white shadow-xl rounded-xl border border-slate-100 overflow-hidden">
-                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎪 Activity
+                        <a href="javascript:void(0)" onclick="toggleActivities('activities')" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎪 Activity
                             Games</a>
-                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎨 Interactive
+                        <a href="javascript:void(0)" onclick="toggleActivities('activities')" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🎨 Interactive
                             Fun</a>
-                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🍿 Snack
+                        <a href="javascript:void(0)" onclick="toggleActivities('snacks')" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🍿 Snack
                             Stalls</a>
-                        <a href="#activities" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🌸 Flower
+                        <a href="javascript:void(0)" onclick="toggleActivities('activities')" class="block px-4 py-3 hover:bg-indigo-50 text-slate-700">🌸 Flower
                             Decor</a>
                     </div>
                 </div>
@@ -157,7 +165,8 @@
             <div class="flex flex-col gap-6 text-center">
                 <a href="{{ url_for('home') }}#home" onclick="toggleMobileMenu()" class="text-lg font-bold">Home</a>
                 <a href="#gallery" onclick="toggleMobileMenu()" class="text-lg font-bold">Decor</a>
-                <a href="#activities" onclick="toggleMobileMenu()" class="text-lg font-bold">Activities</a>
+                <a href="javascript:void(0)" onclick="toggleActivities('activities'); toggleMobileMenu()" class="text-lg font-bold">Activities</a>
+                <a href="javascript:void(0)" onclick="toggleActivities('snacks'); toggleMobileMenu()" class="text-lg font-bold">Snacks</a>
                 <a href="#services" onclick="toggleMobileMenu()" class="text-lg font-bold">Services</a>
                 <a href="#contact" onclick="toggleMobileMenu()" class="bg-indigo-600 text-white py-3 rounded-xl">Contact
                     Now</a>
@@ -272,7 +281,7 @@
     <!-- Activities & Fun -->
     <section id="activities" class="py-24 bg-slate-900 text-white overflow-hidden relative">
         <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full"></div>
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="w-full px-4 md:px-12 xl:px-16 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div>
                     <p class="text-indigo-400 font-bold uppercase tracking-widest text-sm mb-2">Entertainment Hub</p>
@@ -282,43 +291,56 @@
                     and bouncy activities.</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
-                        <img src="https://images.unsplash.com/photo-1533749047135-181ed091f817?auto=format&fit=crop&q=80&w=600"
-                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Games">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
-                        <div class="absolute bottom-8 left-8">
-                            <h4 class="text-2xl font-bold mb-2">Bouncy Castles</h4>
-                            <p class="text-slate-300 text-sm">Sizes for all ages & venues</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-8">
+                {% if activities %}
+                    {% for slug, info in activities.items() %}
+                    <a href="{{ url_for('activity_detail', slug=slug) }}" class="group cursor-pointer block transition-all duration-500 hover:-translate-y-2">
+                        <div class="relative overflow-hidden rounded-[2rem] mb-2 shadow-xl shadow-slate-900/40 group-hover:shadow-indigo-500/50">
+                            <img src="{{ url_for('static', filename='images/' + info.image) }}"
+                                class="w-full h-[250px] md:h-[280px] lg:h-[300px] object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="{{ info.title }}">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent"></div>
+                            <div class="absolute bottom-5 left-4 right-4 text-left">
+                                <h4 class="text-[1.05rem] md:text-lg font-extrabold mb-1 leading-tight text-white drop-shadow-md">{{ info.title }}</h4>
+                                <span class="text-indigo-400 text-xs md:text-sm font-bold flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 uppercase tracking-wider">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Snacks Section -->
+    <section id="snacks" class="hidden py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-pink-500/10 blur-[120px] rounded-full"></div>
+        <div class="w-full px-4 md:px-12 xl:px-16 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <p class="text-pink-400 font-bold uppercase tracking-widest text-sm mb-2">Tasty Treats</p>
+                    <h2 class="text-4xl md:text-5xl font-extrabold">Snacks & Refreshments</h2>
                 </div>
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
-                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=600"
-                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Art">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
-                        <div class="absolute bottom-8 left-8">
-                            <h4 class="text-2xl font-bold mb-2">Interactive Art</h4>
-                            <p class="text-slate-300 text-sm">Face painting, tattoo & clay</p>
+                <p class="text-slate-400 max-w-md">Delight your guests with our incredible selection of classic party snacks and interactive food stalls.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mt-8">
+                {% if snacks %}
+                    {% for slug, info in snacks.items() %}
+                    <a href="{{ url_for('snack_detail', slug=slug) }}" class="group cursor-pointer block transition-all duration-500 hover:-translate-y-2">
+                        <div class="relative overflow-hidden rounded-[2rem] mb-2 shadow-xl shadow-slate-900/40 group-hover:shadow-pink-500/50">
+                            <img src="{{ url_for('static', filename='images/' + info.image) }}"
+                                class="w-full h-[250px] md:h-[280px] lg:h-[300px] object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="{{ info.title }}">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent"></div>
+                            <div class="absolute bottom-5 left-4 right-4 text-left">
+                                <h4 class="text-[1.05rem] md:text-lg font-extrabold mb-1 leading-tight text-white drop-shadow-md">{{ info.title }}</h4>
+                                <span class="text-pink-400 text-xs md:text-sm font-bold flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 uppercase tracking-wider">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-[2.5rem] mb-6">
-                        <img src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&q=80&w=600"
-                            class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
-                            alt="Snacks">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
-                        <div class="absolute bottom-8 left-8">
-                            <h4 class="text-2xl font-bold mb-2">Live Snacks</h4>
-                            <p class="text-slate-300 text-sm">Popcorn, Cotton Candy & Sweet Corn</p>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </section>
@@ -557,6 +579,27 @@
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        function toggleActivities(targetId) {
+            const activitiesEl = document.getElementById('activities');
+            const snacksEl = document.getElementById('snacks');
+
+            if (targetId === 'activities') {
+                activitiesEl.classList.remove('hidden');
+                snacksEl.classList.add('hidden');
+                setTimeout(() => activitiesEl.scrollIntoView({ behavior: 'smooth' }), 50);
+            } else if (targetId === 'snacks') {
+                snacksEl.classList.remove('hidden');
+                activitiesEl.classList.add('hidden');
+                setTimeout(() => snacksEl.scrollIntoView({ behavior: 'smooth' }), 50);
+            }
+        }
+
+        function scrollActivities(direction) {
+            const container = document.getElementById('activities-carousel');
+            const itemWidth = container.firstElementChild ? container.firstElementChild.offsetWidth + 24 : 300; // 24 is gap-6
+            container.scrollBy({ left: direction * itemWidth * 2, behavior: 'smooth' });
         }
 
         function showAllGallery() {
